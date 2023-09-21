@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+
+    <div class="formContainer">
+        <h1 class="my-3">SHIP STATION LICENSE AND SHIP EARTH STATION LICENSE</h1>
+        <hr />
+        <form method="POST" action="">
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <select class="form-select mb-3" id="applicationStatus" name="applicationStatus" aria-label="Default select status">
+                            <option value="New" selected>New</option>
+                            <option value="Renewal">Renewal</option>
+                            <option value="Modification">Modification</option>
+                        </select>
+                        <label for="applicationStatus">Status</label>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="certificateNumber" name="certificateNumber" placeholder="Certificate Number">
+                        <label for="certificateNumber">Certificate Number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="nameOfShip" name="nameOfShip" placeholder="Name of Ship">
+                        <label for="nameOfShip">Name of Ship</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="callSign" name="callSign" placeholder="Callsign or other Identification">
+                        <label for="callSign">Callsign or other Identification</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="imoNumber" name="imoNumber" placeholder="IMO Number">
+                        <label for="imoNumber">IMO Number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="AAIC" name="AAIC" aria-label="Default select aaic">
+                            <option value="PH 02 (International)" selected>PH 02 (International)</option>
+                            <option value="PH 04 (International)">PH 04 (International)</option>
+                        </select>
+                        <label for="aaic">AAIC</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cls" name="cls" placeholder="Class">
+                        <label for="cls">Class</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ownerOfShip" name="ownerOfShip" placeholder="Owner of Ship">
+                        <label for="ownerOfShip">Owner of Ship</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <input type="submit" class="btn btn-primary" id="submit">
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+    
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="formContainer">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>CARGO SHIP SAFETY RADIO LIST</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group d-flex justify-content-between">
+                    <select class="form-select" aria-label="Default select example" id="cssrCategory">
+                        <option value="1">Certificate Number</option>
+                        <option value="2">Ship Name</option>
+                        <option value="3">Distinctive Number/Letters</option>
+                        <option value="4">Port of Registry</option>
+                        <option value="5">Gross Tonnage</option>
+                        <option value="6">Sea Areas</option>
+                        <option value="7">IMO Number</option>
+                        <option value="8">Valid Until</option>
+                    </select>
+                    <input type="text" class="form-control" id="search" aria-label="Text input with dropdown button" onkeyup="searchCSSR()">
+                </div>
+            </div>
+        </div>
+        <hr />
+        <table class="table table-hover table-bordered table-striped" id="tblResultCSSR">
+            <thead class="table-info text-center">
+            <tr>
+                <th scope="col" class="align-middle">ID</th>
+                <th scope="col" class="align-middle">Certificate Number</th>
+                <th scope="col" class="align-middle">Ship Name</th>
+                <th scope="col" class="align-middle">Distinctive Number/Letters</th>
+                <th scope="col" class="align-middle">Port of Registry</th>
+                <th scope="col" class="align-middle">Gross Tonnage</th>
+                <th scope="col" class="align-middle">Sea Areas in which ship is certified to operate (Reg IV/2)</th>
+                <th scope="col" class="align-middle">IMO Number</th>
+                <th scope="col" class="align-middle">Valid Until</th>
+                <th scope="col" class="align-middle">QR Code</th>
+                <th scope="col" class="align-middle">Operations</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for row in all_cssr %}
+                <tr>
+                    <td class="align-middle">{{ row.id }}</td>
+                    <td class="align-middle">{{ row.certificate_number }}</td>
+                    <td class="align-middle">{{ row.ship_name }}</td>
+                    <td class="align-middle">{{ row.distinctive_number }}</td>
+                    <td class="align-middle">{{ row.port_of_registry }}</td>
+                    <td class="align-middle">{{ row.gross_tonnage }}</td>
+                    <td class="align-middle">{{ row.sea_areas }}</td>
+                    <td class="align-middle">{{ row.imo_number }}</td>
+                    <td class="align-middle">{{ row.valid_until }}</td>
+                    <td class="align-middle"><img src="{{ url_for('static', filename='qrcodes/'+row.qr_text+'.png') }}" class="card-img-top"
+                        style="height: 100px"></td>
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-between">
+                            <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ row.id }}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <a href="/delete_cssr/{{ row.id }}" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{ row.id }}" tabindex="-1" aria-labelledby="{{ row.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="{{ row.id }}">Edit</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="entryID" name="entryID" placeholder="ID" value="{{ row.id }}" readonly>
+                                            <label for="entryID">ID</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="certificateNumber" name="certificateNumber" placeholder="Certificate Number" value="{{ row.certificate_number }}">
+                                            <label for="certificateNumber">Certificate Number</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="nameOfShip" name="nameOfShip" placeholder="Name of Ship" value="{{ row.ship_name }}">
+                                            <label for="nameOfShip">Name of Ship</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="distinctiveNumber" name="distinctiveNumber" placeholder="Distinctive number/letters" value="{{ row.distinctive_number }}">
+                                            <label for="callSign">Callsign or other Identification</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="portOfRegistry" name="portOfRegistry" placeholder="Port of Registry" value="{{ row.port_of_registry }}">
+                                            <label for="imoNumber">IMO Number</label>
+                                        </div>
+                                        
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="grossTonnage" name="grossTonnage" placeholder="Gross Tonnage" value="{{ row.gross_tonnage }}">
+                                            <label for="cls">Class</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="seaAreas" name="seaAreas" placeholder="Sea Areas in which ship is certified to operate(Reg IV/2)" value="{{ row.sea_areas }}">
+                                            <label for="ownerOfShip">Owner of Ship</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="imoNumber" name="imoNumber" placeholder="IMO Number" value="{{ row.imo_number }}">
+                                            <label for="ownerOfShip">Owner of Ship</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="date" class="form-control" id="validUntil" name="validUntil" placeholder="Valid Until" value="{{ row.valid_until }}">
+                                            <label for="validUntil">Valid Until</label>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" name="save">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+   
+    
+</div>
+
+  {% endblock content %}

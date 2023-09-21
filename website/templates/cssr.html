@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+
+    <div class="formContainer">
+        <h1 class="my-3">CARGO SHIP SAFETY RADIO</h1>
+        <hr />
+        <form method="POST" action="">
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="certificateNumber" name="certificateNumber" placeholder="Certificate Number">
+                        <label for="certificateNumber">Certificate Number</label>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="nameOfShip" name="nameOfShip" placeholder="Name of Ship">
+                        <label for="nameOfShip">Name of Ship</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="distinctiveNumber" name="distinctiveNumber" placeholder="Distinctive number/letters">
+                        <label for="distinctiveNumber">Distinctive number/letters</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="portOfRegistry" name="portOfRegistry" placeholder="Port of Registry">
+                        <label for="portOfRegistry">Port of Registry</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="grossTonnage" name="grossTonnage" placeholder="Gross Tonnage">
+                        <label for="grossTonnage">Gross Tonnage</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="seaAreas" name="seaAreas" placeholder="Sea Areas in which ship is certified to operate (Reg IV/2)">
+                        <label for="seaAreas">Sea Areas in which ship is certified to operate (Reg IV/2)</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="imoNumber" name="imoNumber" placeholder="IMO Number">
+                        <label for="imoNumber">IMO Number</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="validUntil" name="validUntil" placeholder="Valid Until">
+                        <label for="validUntil">Valid Until</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <input type="submit" class="btn btn-primary" id="submit">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}

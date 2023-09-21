@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="formContainer">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>SHIP STATION LICENSE AND SHIP EARTH STATION LICENSE LIST</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group d-flex justify-content-between">
+                    <select class="form-select" aria-label="Default select example" id="category">
+                        <option value="1">Status</option>
+                        <option value="2">Certificate Number</option>
+                        <option value="3">Ship Name</option>
+                        <option value="4">Call Sign</option>
+                        <option value="5">IMO Number</option>
+                        <option value="6">AAIC</option>
+                        <option value="7">Class</option>
+                        <option value="8">Owner Of Ship</option>
+                    </select>
+                    <input type="text" class="form-control" id="search" aria-label="Text input with dropdown button" onkeyup="searchFunc()">
+                </div>
+            </div>
+        </div> 
+        <hr />
+        <table class="table table-hover table-bordered table-striped" id="tblResult">
+            <thead class="table-info text-center">
+            <tr>
+                <th scope="col" class="align-middle">ID</th>
+                <th scope="col" class="align-middle">Status</th>
+                <th scope="col" class="align-middle">Certificate Number</th>
+                <th scope="col" class="align-middle">Ship Name</th>
+                <th scope="col" class="align-middle">Call Sign</th>
+                <th scope="col" class="align-middle">IMO Number</th>
+                <th scope="col" class="align-middle">AAIC</th>
+                <th scope="col" class="align-middle">Class</th>
+                <th scope="col" class="align-middle">Owner Of Ship</th>
+                <th scope="col" class="align-middle">QR Code</th>
+                <th scope="col" class="align-middle">Operations</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for row in all_sslses %}
+                <tr>
+                    <td class="align-middle">{{ row.id }}</td>
+                    <td class="align-middle">{{ row.stats }}</td>
+                    <td class="align-middle">{{ row.certificate_number }}</td>
+                    <td class="align-middle">{{ row.ship_name }}</td>
+                    <td class="align-middle">{{ row.call_sign }}</td>
+                    <td class="align-middle">{{ row.imo_number }}</td>
+                    <td class="align-middle">{{ row.aaic }}</td>
+                    <td class="align-middle">{{ row.class_type }}</td>
+                    <td class="align-middle">{{ row.ship_owner }}</td>
+                    <td class="align-middle"><img src="{{ url_for('static', filename='qrcodes/'+row.qr_text+'.png') }}" class="card-img-top"
+                        style="height: 100px"></td>
+                    <td class="align-middle">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ row.id }}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <a href="/delete_sslses/{{ row.id }}" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{ row.id }}" tabindex="-1" aria-labelledby="{{ row.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="{{ row.id }}">Edit</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="entryID" name="entryID" placeholder="ID" value="{{ row.id }}" readonly>
+                                            <label for="entryID">ID</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select mb-3" id="applicationStatus" name="applicationStatus" aria-label="Default select status">
+                                                {% if row.stats == "New" %}
+                                                    <option value="New" selected>New</option>
+                                                    <option value="Renewal">Renewal</option>
+                                                    <option value="Modification">Modification</option>
+                                                {% elif row.stats == "Renewal" %}
+                                                    <option value="New">New</option>
+                                                    <option value="Renewal" selected>Renewal</option>
+                                                    <option value="Modification">Modification</option>
+                                                {% else %}
+                                                    <option value="New">New</option>
+                                                    <option value="Renewal">Renewal</option>
+                                                    <option value="Modification" selected>Modification</option>
+                                                {% endif %}
+                                            </select>
+                                            <label for="applicationStatus">Status</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="certificateNumber" name="certificateNumber" placeholder="Certificate Number" value="{{ row.certificate_number }}">
+                                            <label for="certificateNumber">Certificate Number</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="nameOfShip" name="nameOfShip" placeholder="Name of Ship" value="{{ row.ship_name }}">
+                                            <label for="nameOfShip">Name of Ship</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="callSign" name="callSign" placeholder="Callsign or other Identification" value="{{ row.call_sign }}">
+                                            <label for="callSign">Callsign or other Identification</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="imoNumber" name="imoNumber" placeholder="IMO Number" value="{{ row.imo_number }}">
+                                            <label for="imoNumber">IMO Number</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" id="AAIC" name="AAIC" aria-label="Default select aaic">
+                                                {% if row.aaic == "PH 02 (International)" %}
+                                                    <option value="PH 02 (International)" selected>PH 02 (International)</option>
+                                                    <option value="PH 04 (International)">PH 04 (International)</option>
+                                                {% else %}
+                                                <option value="PH 02 (International)">PH 02 (International)</option>
+                                                    <option value="PH 04 (International)" selected>PH 04 (International)</option>
+                                                {% endif %}
+                                            </select>
+                                            <label for="aaic">AAIC</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="cls" name="cls" placeholder="Class" value="{{ row.class_type }}">
+                                            <label for="cls">Class</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="ownerOfShip" name="ownerOfShip" placeholder="Owner of Ship" value="{{ row.ship_owner }}">
+                                            <label for="ownerOfShip">Owner of Ship</label>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" name="save">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>   
+
+    
+</div>
+
+  
+  
+
+  {% endblock content %}

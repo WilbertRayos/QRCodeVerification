@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                {% if category == "error" %}
+                  <div class="alert alert-danger alert-dismissible fade show mt-2 mb-2" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                {% else %}
+                  <div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+      </div>
+
+        <div class="main-wrapper">
+            <div class="mt-4 p-5 rounded col-md-4 mx-auto mb-4 vessel">
+                <img src="{{ url_for('static', filename='img/ntc_logo.png') }}" class="mb-4" id="logo">
+                <h3 class="mb-4 text-center">SPECIAL LICENSING BRANCH</h3>
+                <form method="POST" action="">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope-at-fill"></i></span>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-lock-fill"></i></i></span>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-submit">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footers">
+      <!-- <div class="footer d-flex justify-content-center bg-light-subtle">
+        <p class="mx-5 text-body-secondary" id="footer-disclaimer">Disclaimer: If you have any inquiries or would like to provide feedback regarding the aforementioned results, we kindly request that you contact us at your earliest convenience via phone at 8924-3731. Your communication is highly valued, and we are committed to providing you with the utmost assistance and support. </p>    
+      </div> -->
+      <div class="footer d-flex justify-content-center bg-body-secondary pt-3">
+        <ul>
+          <li><a href="https://ntc.gov.ph"><img src="{{ url_for('static', filename='img/ntc_logo.png') }}" class="logo"></a></li>
+          <li><img src="{{ url_for('static', filename='img/bagong_pilipinas_logo.png') }}" class="logo"></li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+  </body>
+</html>
